@@ -8,22 +8,24 @@ print = functools.partial(print, flush=True)
 
 # The id of the channel to monitor
 channel_id = 733925968955047936
+
 # The discord connection client
 client = discord.Client(fetch_offline_members=True, guild_subscriptions=False,
                         activity=discord.Game("https://github.com/smmalis37/ventbot"))
+
 # The task that actually does work
 task = None
 
+
 # Run once the client is fully connected and synced
 # If there is a disconnect and reconnect, this will run again
-
-
 @client.event
 async def on_ready():
     global task
     print("Connected.")
-    # Schedule the process_messages task to run immediately
-    task = asyncio.ensure_future(process_messages())
+    if task == None:
+        # Schedule the process_messages task to run immediately
+        task = asyncio.ensure_future(process_messages())
 
 
 # Run whenever the client loses connection to discord for any reason
@@ -38,6 +40,7 @@ async def on_disconnect():
 
 
 async def process_messages():
+    # Repeat forever
     while True:
         # Get the channel we're monitoring
         channel = client.get_channel(channel_id)
