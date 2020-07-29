@@ -30,10 +30,11 @@ async def on_ready():
 @client.event
 async def on_disconnect():
     global task
-    print("Lost connection, cancelling.")
-    # Stop the task from running, since it can't do anything right now
-    task.cancel()
-    task = None
+    if task != None:
+        print("Lost connection, cancelling.")
+        # Stop the task from running, since it can't do anything right now
+        task.cancel()
+        task = None
 
 
 async def process_messages():
