@@ -20,6 +20,7 @@ task = None
 
 @client.event
 async def on_ready():
+    global task
     print("Connected.")
     # Schedule the process_messages task to run immediately
     task = asyncio.ensure_future(process_messages())
@@ -28,6 +29,7 @@ async def on_ready():
 # Run whenever the client loses connection to discord for any reason
 @client.event
 async def on_disconnect():
+    global task
     print("Lost connection, cancelling.")
     # Stop the task from running, since it can't do anything right now
     task.cancel()
