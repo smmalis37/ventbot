@@ -61,7 +61,7 @@ async def process_messages():
         messages = await channel.history(before=timestamp).flatten()
         print("Deleting " + str(len(messages)) + " messages.")
         # Delete the messages
-        # await channel.delete_messages(messages)
+        await channel.delete_messages(messages)
         # Wait to run again
         print("Waiting 1 hour.")
         await asyncio.sleep(60 * 60)
