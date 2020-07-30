@@ -3,6 +3,10 @@ import asyncio
 from datetime import datetime, timedelta
 import functools
 
+# Additional logging, if needed
+# import logging
+# logging.basicConfig(level=logging.INFO)
+
 # Ensure messages get logged correctly
 print = functools.partial(print, flush=True)
 
@@ -27,6 +31,11 @@ async def on_ready():
         # Schedule the process_messages task to run immediately
         task = asyncio.ensure_future(process_messages())
 
+# Run after a disconnect if able to resume the connection instead of needing to make a fresh connection
+@client.event
+async def on_resumed():
+    print("Resumed.")
+    await on_ready()
 
 # Run whenever the client loses connection to discord for any reason
 @client.event
