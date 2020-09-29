@@ -14,8 +14,7 @@ print = functools.partial(print, flush=True)
 channel_id = 733925968955047936
 
 # The discord connection client
-client = discord.Client(fetch_offline_members=True, guild_subscriptions=False,
-                        activity=discord.Game("https://github.com/smmalis37/ventbot"))
+client = discord.Client(activity=discord.Game("https://github.com/smmalis37/ventbot"))
 
 # The task that actually does work
 task = None
