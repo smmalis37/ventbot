@@ -1,7 +1,9 @@
 import discord
+from discord.ext import commands
 import asyncio
 from datetime import datetime, timedelta
 import functools
+import random
 
 # Additional logging, if needed
 # import logging
@@ -14,7 +16,7 @@ print = functools.partial(print, flush=True)
 channel_id = 733925968955047936
 
 # The discord connection client
-client = discord.Client(activity=discord.Game("https://github.com/smmalis37/ventbot"))
+client = commands.Bot("!", activity=discord.Game("https://github.com/smmalis37/ventbot"))
 
 # The task that actually does work
 task = None
@@ -64,6 +66,12 @@ async def process_messages():
         # Wait to run again
         print("Waiting 1 hour.")
         await asyncio.sleep(60 * 60)
+
+
+@client.command()
+async def roll(ctx, max):
+    result = random.randint(1, int(max))
+    await ctx.reply(str(result))
 
 
 if __name__ == '__main__':
