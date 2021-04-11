@@ -69,9 +69,11 @@ async def process_messages():
 
 
 @client.command()
-async def roll(ctx, max):
-    result = random.randint(1, int(max))
-    await ctx.reply(str(result))
+async def roll(ctx, *args):
+    reply = ""
+    for max in args:
+        reply += str(random.randint(1, int(max))) + " "
+    await ctx.reply(reply)
 
 
 if __name__ == '__main__':
