@@ -4,6 +4,7 @@ import asyncio
 from datetime import datetime, timedelta
 import functools
 import random
+import typing
 
 # Additional logging, if needed
 # import logging
@@ -73,6 +74,14 @@ async def roll(ctx, *args):
     reply = ""
     for max in args:
         reply += str(random.randint(1, int(max))) + " "
+    await ctx.reply(reply)
+
+
+@client.command()
+async def flip(ctx, count: typing.Optional[int] = 1):
+    reply = ""
+    for x in range(count):
+        reply += random.choice(["Heads", "Tails"]) + " "
     await ctx.reply(reply)
 
 
