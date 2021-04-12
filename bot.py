@@ -6,6 +6,7 @@ import functools
 import random
 import typing
 
+
 # Additional logging, if needed
 # import logging
 # logging.basicConfig(level=logging.INFO)
@@ -49,7 +50,6 @@ async def on_disconnect():
         task.cancel()
         task = None
 
-
 async def process_messages():
     # Repeat forever
     while True:
@@ -76,13 +76,16 @@ async def roll(ctx, *args):
         reply += str(random.randint(1, int(max))) + " "
     await ctx.reply(reply)
 
-
 @client.command()
 async def flip(ctx, count: typing.Optional[int] = 1):
     reply = ""
     for x in range(count):
         reply += random.choice(["Heads", "Tails"]) + " "
     await ctx.reply(reply)
+
+@client.event
+async def on_command_error(ctx, e):
+    await ctx.reply(e)
 
 
 if __name__ == '__main__':
