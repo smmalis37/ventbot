@@ -70,10 +70,13 @@ async def process_messages():
 
 
 @client.command()
-async def roll(ctx, *args):
+async def roll(ctx, count: typing.Optional[int] = 6, max: typing.Optional[int] = None):
+    if max == None:
+        max = count
+        count = 1
     reply = ""
-    for max in args:
-        reply += str(random.randint(1, int(max))) + " "
+    for x in range(count):
+        reply += str(random.randint(1, max)) + " "
     await ctx.reply(reply)
 
 @client.command()
