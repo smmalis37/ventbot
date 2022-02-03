@@ -15,7 +15,7 @@ import typing
 print = functools.partial(print, flush=True)
 
 # The id of the channel to monitor
-channel_id = 733925968955047936
+channel_id = 886679404330242108
 
 # The discord connection client
 client = commands.Bot("!", activity=discord.Game("https://github.com/smmalis37/ventbot"))
@@ -60,7 +60,7 @@ async def process_messages():
         timestamp = datetime.now() - timedelta(days=7)
         print("Messages older than " + str(timestamp))
         # Get all messages before that time
-        messages = await channel.history(before=timestamp).flatten()
+        messages = await channel.history(before=timestamp, limit=None).flatten()
         print("Deleting " + str(len(messages)) + " messages.")
         # Delete the messages
         await channel.delete_messages(messages)
