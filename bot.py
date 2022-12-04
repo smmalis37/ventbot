@@ -18,7 +18,9 @@ print = functools.partial(print, flush=True)
 channel_id = 886679404330242108
 
 # The discord connection client
-client = commands.Bot("!", activity=discord.Game("https://github.com/smmalis37/ventbot"))
+intents = discord.Intents.default()
+intents.message_content = True
+client = commands.Bot("!", intents=intents, activity=discord.Game("https://github.com/smmalis37/ventbot"))
 
 # The task that actually does work
 task = None
@@ -31,6 +33,7 @@ async def on_ready():
     global task
     print("Connected.")
     if task == None:
+        print("Scheduling task.")
         # Schedule the process_messages task to run immediately
         task = asyncio.ensure_future(process_messages())
 
@@ -53,6 +56,7 @@ async def on_disconnect():
 async def process_messages():
     # Repeat forever
     while True:
+        print("Beginning processing.")
         # Get the channel we're monitoring
         channel = client.get_channel(channel_id)
         print("Reading from " + channel.name)
@@ -63,7 +67,9 @@ async def process_messages():
         messages = await channel.history(before=timestamp, limit=None).flatten()
         print("Deleting " + str(len(messages)) + " messages.")
         # Delete the messages
-        await channel.delete_messages(messages)
+        for m in messages:
+            if (not m.pinned):
+                await m.delete()
         # Wait to run again
         print("Waiting 1 hour.")
         await asyncio.sleep(60 * 60)
